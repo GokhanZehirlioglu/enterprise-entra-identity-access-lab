@@ -1,0 +1,31 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="architecture-v1" id="wez-architecture-v1">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="900">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="people" value="People &amp; Personas&#xa;Employees · Researchers · IT · Guests" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;" vertex="1" parent="1"><mxGeometry x="40" y="160" width="230" height="90" as="geometry"/></mxCell>
+        <mxCell id="groups" value="Identity Groups&#xa;Department · Access · CA Scope · Role Groups" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;" vertex="1" parent="1"><mxGeometry x="330" y="160" width="250" height="90" as="geometry"/></mxCell>
+        <mxCell id="entra" value="Microsoft Entra ID&#xa;Identity Control Plane" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="650" y="150" width="260" height="110" as="geometry"/></mxCell>
+        <mxCell id="auth" value="Authentication&#xa;MFA" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1"><mxGeometry x="990" y="80" width="200" height="70" as="geometry"/></mxCell>
+        <mxCell id="ca" value="Conditional Access&#xa;Report-only → Validate → Enforce" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1"><mxGeometry x="990" y="180" width="230" height="80" as="geometry"/></mxCell>
+        <mxCell id="priv" value="Privileged Access&#xa;RBAC · PIM/JIT · Least Privilege" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1"><mxGeometry x="990" y="300" width="230" height="80" as="geometry"/></mxCell>
+        <mxCell id="apps" value="Enterprise Apps / SSO" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1"><mxGeometry x="1300" y="150" width="210" height="70" as="geometry"/></mxCell>
+        <mxCell id="azure" value="Azure Resources / RBAC" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1"><mxGeometry x="1300" y="280" width="210" height="70" as="geometry"/></mxCell>
+        <mxCell id="logs" value="Sign-in &amp; Audit Logs&#xa;Validation · RCA · Audit" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1"><mxGeometry x="650" y="430" width="260" height="80" as="geometry"/></mxCell>
+        <mxCell id="auto" value="PowerShell / Microsoft Graph&#xa;Provisioning · Lifecycle · Evidence" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1"><mxGeometry x="330" y="430" width="250" height="80" as="geometry"/></mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="people" target="groups"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="groups" target="entra"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="entra" target="auth"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="auth" target="ca"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="entra" target="priv"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="ca" target="apps"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e7" edge="1" parent="1" source="ca" target="azure"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e8" edge="1" parent="1" source="priv" target="apps"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e9" edge="1" parent="1" source="priv" target="azure"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e10" edge="1" parent="1" source="entra" target="logs"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e11" edge="1" parent="1" source="auto" target="entra"><mxGeometry relative="1" as="geometry"/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
