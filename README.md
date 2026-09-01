@@ -88,7 +88,7 @@ No real employer, internship environment, tenant, person, email address, domain,
 
 ## Status
 
-**Phase 0 — Project Foundation**
+**Phase Start — Project Foundation**
 
 - [x] Repository foundation
 - [x] Project charter
