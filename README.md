@@ -86,6 +86,16 @@ No real employer, internship environment, tenant, person, email address, domain,
 
 `wez-lab.example` is a documentation-only fictional domain.
 
+
+
+## Foundation Evidence
+
+- Dedicated Microsoft Entra Workforce tenant provisioned for the fictional WEZ organization.
+- Environment initialized with Microsoft Entra ID Premium P2.
+- Sensitive tenant and account information has been sanitized for public documentation.
+
+![WEZ tenant foundation](images/00-foundation/01-wez-tenant-overview.png)
+
 ## Status
 
 **Phase Start — Project Foundation**
@@ -98,3 +108,5 @@ No real employer, internship environment, tenant, person, email address, domain,
 - [x] Architecture v1
 - [ ] Tenant implementation
 - [ ] Identity and group deployment
+
+
