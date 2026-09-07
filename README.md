@@ -94,19 +94,46 @@ No real employer, internship environment, tenant, person, email address, domain,
 - Environment initialized with Microsoft Entra ID Premium P2.
 - Sensitive tenant and account information has been sanitized for public documentation.
 
-![WEZ tenant foundation](images/00-foundation/01-wez-tenant-overview.png)
+
 
 ## Status
 
-**Phase Start — Project Foundation**
+## Current Status
 
-- [x] Repository foundation
-- [x] Project charter
-- [x] Requirements v1
-- [x] Fictional organization model
-- [x] Identity dataset v1
-- [x] Architecture v1
-- [ ] Tenant implementation
-- [ ] Identity and group deployment
+### Phase 0 — Project Foundation ✅ Complete
+- Repository foundation
+- Project charter
+- Requirements
+- Fictional WEZ organization model
+- Architecture v1
+- Dedicated Microsoft Entra Workforce tenant
 
+### Phase 1 — Identity Model ✅ Complete
+- 47 modeled WEZ identities
+  - 38 standard workforce identities
+  - 3 separate privileged administrator identities
+  - 2 emergency / break-glass identities
+  - 4 B2B guest identities
+- 8 department Security groups
+- 4 Conditional Access scope groups
+- Standard / privileged account separation
+- Emergency access isolation
+- Guest identity model
+- Sanitized implementation evidence
+- Identity model v1
 
+### Next
+**Phase 2 — Authentication & MFA**
+
+Detailed Phase 1 documentation:
+[`docs/03-identity-model.md`](docs/03-identity-model.md)
+
+Sanitized identity data:
+- [`sanitized-samples/users.csv`](sanitized-samples/users.csv)
+- [`sanitized-samples/groups.csv`](sanitized-samples/groups.csv)
+
+Implementation evidence:
+[`images/01-identity-model/`](images/01-identity-model/)
+
+Identity model source:
+[`diagrams/identity-model-v1.mmd`](diagrams/identity-model-v1.mmd)
