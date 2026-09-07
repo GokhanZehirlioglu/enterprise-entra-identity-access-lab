@@ -18,6 +18,8 @@ WEZ v1 contains **47 directory identities**:
 
 The public sample data uses sanitized values in `sanitized-samples/users.csv`.
 
+> **Operational tenant note:** The Microsoft Entra portal shows **48 total users** in the Phase 1 evidence because the tenant contains the 47 modeled WEZ identities **plus one bootstrap lab administrator account** used to manage the environment. That bootstrap account is outside the fictional WEZ workforce model and is excluded from the public synthetic dataset.
+
 ## Organizational Structure
 
 - Directorate & Strategy
@@ -159,6 +161,20 @@ flowchart TD
 - Eight department groups represent the organizational structure.
 - Four Conditional Access scope groups establish future policy boundaries.
 - The final All Groups view contains 12 Phase 1 groups.
+
+## Evidence
+
+The following sanitized screenshots provide implementation evidence for Phase 1:
+
+| Evidence | What it proves |
+|---|---|
+| [`01-all-users.png`](../images/01-identity-model/01-all-users.png) | Workforce, privileged, emergency and guest identities exist in the tenant. The portal count includes the separate bootstrap lab administrator noted above. |
+| [`02-all-groups.png`](../images/01-identity-model/02-all-groups.png) | The 12 Phase 1 Security groups exist with Assigned membership. |
+| [`03-privileged-admin-group.png`](../images/01-identity-model/03-privileged-admin-group.png) | Three dedicated privileged identities are isolated in `GRP-CA-ADMINS-STRICT`. |
+| [`04-breakglass-group.png`](../images/01-identity-model/04-breakglass-group.png) | Two emergency identities are isolated in `GRP-CA-BREAKGLASS-EXCLUDED`. |
+| [`05-guest-group.png`](../images/01-identity-model/05-guest-group.png) | Four external collaborators exist as Guest identities and are scoped through `GRP-CA-GUESTS`. |
+
+Sensitive tenant-specific identifiers and operator information are sanitized in the public evidence.
 
 ## Deferred to Later Phases
 
