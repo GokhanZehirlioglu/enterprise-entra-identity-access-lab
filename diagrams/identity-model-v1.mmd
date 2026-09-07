@@ -1,0 +1,18 @@
+flowchart TD
+    WEZ[WEZ Identities]
+    WEZ --> STD[Standard Workforce<br/>38 Member Accounts]
+    WEZ --> PRIV[Privileged Identities<br/>3 Separate Admin Accounts]
+    WEZ --> EMG[Emergency Access<br/>2 Break-Glass Accounts]
+    WEZ --> GST[External Guests<br/>4 B2B Guest Identities]
+
+    STD --> DEPT[8 Department Security Groups]
+    STD --> MFA[GRP-CA-MFA-ALL-MEMBERS]
+    PRIV --> ADM[GRP-CA-ADMINS-STRICT]
+    EMG --> BG[GRP-CA-BREAKGLASS-EXCLUDED]
+    GST --> GUESTS[GRP-CA-GUESTS]
+
+    DEPT --> AR[Future App / Resource Access]
+    MFA --> CA[Phase 2 / 3 Authentication & Conditional Access]
+    ADM --> CA
+    BG --> CA
+    GUESTS --> CA
