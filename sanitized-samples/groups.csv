@@ -1,0 +1,13 @@
+displayName,category,purpose,membershipType,roleAssignable,status,implementationPhase
+GRP-DEP-DIR,Department,Directorate & Strategy,Assigned,No,Implemented,Phase 1
+GRP-DEP-RES-EU,Department,Research / European Economy & Policy,Assigned,No,Implemented,Phase 1
+GRP-DEP-RES-LAB,Department,Research / Labour Markets & Social Policy,Assigned,No,Implemented,Phase 1
+GRP-DEP-RES-DIG,Department,Research / Digital Economy & Innovation,Assigned,No,Implemented,Phase 1
+GRP-DEP-RES-PFR,Department,Research / Public Finance & Regulation,Assigned,No,Implemented,Phase 1
+GRP-DEP-IT,Department,IT & Digital Services,Assigned,No,Implemented,Phase 1
+GRP-DEP-AF,Department,Administration & Finance,Assigned,No,Implemented,Phase 1
+GRP-DEP-COMMS,Department,Communications & Knowledge Transfer,Assigned,No,Implemented,Phase 1
+GRP-CA-MFA-ALL-MEMBERS,Conditional Access Scope,Baseline MFA scope for standard WEZ workforce identities,Assigned,No,Implemented,Phase 1
+GRP-CA-ADMINS-STRICT,Conditional Access Scope,Dedicated privileged administrative identities,Assigned,No,Implemented,Phase 1
+GRP-CA-GUESTS,Conditional Access Scope,External research guest identities,Assigned,No,Implemented,Phase 1
+GRP-CA-BREAKGLASS-EXCLUDED,Conditional Access Scope,Emergency access identities reserved for controlled CA exclusion,Assigned,No,Implemented,Phase 1
