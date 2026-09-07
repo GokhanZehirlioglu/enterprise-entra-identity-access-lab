@@ -1,48 +1,48 @@
-displayName,userPrincipalName,department,jobTitle,userType,persona
-Anna Keller,anna.keller@wez-lab.example,Directorate & Strategy,Executive Director,Member,Executive
-Markus Vogel,markus.vogel@wez-lab.example,Directorate & Strategy,Deputy Director,Member,Executive
-Clara Neumann,clara.neumann@wez-lab.example,Directorate & Strategy,Executive Assistant,Member,Standard
-Sophie Hartmann,sophie.hartmann@wez-lab.example,Research / European Economy & Policy,Research Group Lead,Member,Manager
-Lukas Weber,lukas.weber@wez-lab.example,Research / European Economy & Policy,Senior Researcher,Member,Researcher
-Mia Schneider,mia.schneider@wez-lab.example,Research / European Economy & Policy,Researcher,Member,Researcher
-Felix Braun,felix.braun@wez-lab.example,Research / European Economy & Policy,Researcher,Member,Researcher
-Nina Krüger,nina.krueger@wez-lab.example,Research / European Economy & Policy,Research Assistant,Member,Researcher
-Johannes Becker,johannes.becker@wez-lab.example,Research / Labour Markets & Social Policy,Research Group Lead,Member,Manager
-Laura König,laura.koenig@wez-lab.example,Research / Labour Markets & Social Policy,Senior Researcher,Member,Researcher
-David Wagner,david.wagner@wez-lab.example,Research / Labour Markets & Social Policy,Researcher,Member,Researcher
-Lea Hoffmann,lea.hoffmann@wez-lab.example,Research / Labour Markets & Social Policy,Researcher,Member,Researcher
-Tim Richter,tim.richter@wez-lab.example,Research / Labour Markets & Social Policy,Research Assistant,Member,Researcher
-Katharina Wolf,katharina.wolf@wez-lab.example,Research / Digital Economy & Innovation,Research Group Lead,Member,Manager
-Jonas Fischer,jonas.fischer@wez-lab.example,Research / Digital Economy & Innovation,Senior Researcher,Member,Researcher
-Amelie Schmitt,amelie.schmitt@wez-lab.example,Research / Digital Economy & Innovation,Researcher,Member,Researcher
-Paul Lorenz,paul.lorenz@wez-lab.example,Research / Digital Economy & Innovation,Researcher,Member,Researcher
-Eva Sommer,eva.sommer@wez-lab.example,Research / Digital Economy & Innovation,Research Assistant,Member,Researcher
-Sebastian Roth,sebastian.roth@wez-lab.example,Research / Public Finance & Regulation,Research Group Lead,Member,Manager
-Marie Bauer,marie.bauer@wez-lab.example,Research / Public Finance & Regulation,Senior Researcher,Member,Researcher
-Leon Franke,leon.franke@wez-lab.example,Research / Public Finance & Regulation,Researcher,Member,Researcher
-Julia Peters,julia.peters@wez-lab.example,Research / Public Finance & Regulation,Researcher,Member,Researcher
-Noah Scholz,noah.scholz@wez-lab.example,Research / Public Finance & Regulation,Research Assistant,Member,Researcher
-Jonas Becker,jonas.becker@wez-lab.example,IT & Digital Services,Head of IT,Member,IT-Admin-Owner
-Sarah Klein,sarah.klein@wez-lab.example,IT & Digital Services,Cloud & Identity Administrator,Member,IT-Admin-Owner
-Daniel Krüger,daniel.krueger@wez-lab.example,IT & Digital Services,Systems Administrator,Member,IT-Admin-Owner
-Emilia Haas,emilia.haas@wez-lab.example,IT & Digital Services,Service Desk Specialist,Member,Helpdesk
-Robin Schuster,robin.schuster@wez-lab.example,IT & Digital Services,IT Support Specialist,Member,Helpdesk
-Thomas Engel,thomas.engel@wez-lab.example,Administration & Finance,Head of Administration & Finance,Member,Manager
-Lisa Werner,lisa.werner@wez-lab.example,Administration & Finance,Finance Controller,Member,Finance
-Martin Busch,martin.busch@wez-lab.example,Administration & Finance,Accountant,Member,Finance
-Isabel Kuhn,isabel.kuhn@wez-lab.example,Administration & Finance,HR & People Operations Specialist,Member,HR
-Florian Arnold,florian.arnold@wez-lab.example,Administration & Finance,Procurement Specialist,Member,Procurement
-Hannah Seidel,hannah.seidel@wez-lab.example,Administration & Finance,Office Administration,Member,Standard
-Carolin Maier,carolin.maier@wez-lab.example,Communications & Knowledge Transfer,Head of Communications,Member,Manager
-Maximilian Graf,maximilian.graf@wez-lab.example,Communications & Knowledge Transfer,Digital Communications Manager,Member,Comms
-Elena Jäger,elena.jaeger@wez-lab.example,Communications & Knowledge Transfer,Knowledge Transfer Manager,Member,Comms
-Moritz Lang,moritz.lang@wez-lab.example,Communications & Knowledge Transfer,Web & Content Editor,Member,Comms
-Jonas Becker (Admin),admin.jonas.becker@wez-lab.example,Privileged Accounts,Head of IT privileged account,Member,Privileged
-Sarah Klein (Admin),admin.sarah.klein@wez-lab.example,Privileged Accounts,Cloud & Identity Admin privileged account,Member,Privileged
-Daniel Krüger (Admin),admin.daniel.krueger@wez-lab.example,Privileged Accounts,Systems Admin privileged account,Member,Privileged
-Emergency Admin 01,emergency.admin01@wez-lab.example,Emergency Access,Break-glass account,Member,Emergency
-Emergency Admin 02,emergency.admin02@wez-lab.example,Emergency Access,Break-glass account,Member,Emergency
-Elena Rossi,guest.elena.rossi@wez-lab.example,External Guests,Visiting Researcher - University of Milan,Guest,Guest
-Pierre Laurent,guest.pierre.laurent@wez-lab.example,External Guests,Visiting Researcher - Paris Policy Lab,Guest,Guest
-Marta Kowalska,guest.marta.kowalska@wez-lab.example,External Guests,External Research Partner - Warsaw Economics Institute,Guest,Guest
-Tomás García,guest.tomas.garcia@wez-lab.example,External Guests,External Research Partner - Iberian Policy Network,Guest,Guest
+displayName,userPrincipalName,department,jobTitle,companyName,userType,persona
+Anna Keller,anna.keller@wez-lab.example,Directorate & Strategy,Executive Director,WEZ,Member,Executive
+Markus Vogel,markus.vogel@wez-lab.example,Directorate & Strategy,Deputy Director,WEZ,Member,Executive
+Clara Neumann,clara.neumann@wez-lab.example,Directorate & Strategy,Executive Assistant,WEZ,Member,Standard
+Sophie Hartmann,sophie.hartmann@wez-lab.example,Research / European Economy & Policy,Research Group Lead,WEZ,Member,Manager
+Lukas Weber,lukas.weber@wez-lab.example,Research / European Economy & Policy,Senior Researcher,WEZ,Member,Researcher
+Mia Schneider,mia.schneider@wez-lab.example,Research / European Economy & Policy,Researcher,WEZ,Member,Researcher
+Felix Braun,felix.braun@wez-lab.example,Research / European Economy & Policy,Researcher,WEZ,Member,Researcher
+Nina Krüger,nina.krueger@wez-lab.example,Research / European Economy & Policy,Research Assistant,WEZ,Member,Researcher
+Johannes Becker,johannes.becker@wez-lab.example,Research / Labour Markets & Social Policy,Research Group Lead,WEZ,Member,Manager
+Laura König,laura.koenig@wez-lab.example,Research / Labour Markets & Social Policy,Senior Researcher,WEZ,Member,Researcher
+David Wagner,david.wagner@wez-lab.example,Research / Labour Markets & Social Policy,Researcher,WEZ,Member,Researcher
+Lea Hoffmann,lea.hoffmann@wez-lab.example,Research / Labour Markets & Social Policy,Researcher,WEZ,Member,Researcher
+Tim Richter,tim.richter@wez-lab.example,Research / Labour Markets & Social Policy,Research Assistant,WEZ,Member,Researcher
+Katharina Wolf,katharina.wolf@wez-lab.example,Research / Digital Economy & Innovation,Research Group Lead,WEZ,Member,Manager
+Jonas Fischer,jonas.fischer@wez-lab.example,Research / Digital Economy & Innovation,Senior Researcher,WEZ,Member,Researcher
+Amelie Schmitt,amelie.schmitt@wez-lab.example,Research / Digital Economy & Innovation,Researcher,WEZ,Member,Researcher
+Paul Lorenz,paul.lorenz@wez-lab.example,Research / Digital Economy & Innovation,Researcher,WEZ,Member,Researcher
+Eva Sommer,eva.sommer@wez-lab.example,Research / Digital Economy & Innovation,Research Assistant,WEZ,Member,Researcher
+Sebastian Roth,sebastian.roth@wez-lab.example,Research / Public Finance & Regulation,Research Group Lead,WEZ,Member,Manager
+Marie Bauer,marie.bauer@wez-lab.example,Research / Public Finance & Regulation,Senior Researcher,WEZ,Member,Researcher
+Leon Franke,leon.franke@wez-lab.example,Research / Public Finance & Regulation,Researcher,WEZ,Member,Researcher
+Julia Peters,julia.peters@wez-lab.example,Research / Public Finance & Regulation,Researcher,WEZ,Member,Researcher
+Noah Scholz,noah.scholz@wez-lab.example,Research / Public Finance & Regulation,Research Assistant,WEZ,Member,Researcher
+Jonas Becker,jonas.becker@wez-lab.example,IT & Digital Services,Head of IT,WEZ,Member,IT-Admin-Owner
+Sarah Klein,sarah.klein@wez-lab.example,IT & Digital Services,Cloud & Identity Administrator,WEZ,Member,IT-Admin-Owner
+Daniel Krüger,daniel.krueger@wez-lab.example,IT & Digital Services,Systems Administrator,WEZ,Member,IT-Admin-Owner
+Emilia Haas,emilia.haas@wez-lab.example,IT & Digital Services,Service Desk Specialist,WEZ,Member,Helpdesk
+Robin Schuster,robin.schuster@wez-lab.example,IT & Digital Services,IT Support Specialist,WEZ,Member,Helpdesk
+Thomas Engel,thomas.engel@wez-lab.example,Administration & Finance,Head of Administration & Finance,WEZ,Member,Manager
+Lisa Werner,lisa.werner@wez-lab.example,Administration & Finance,Finance Controller,WEZ,Member,Finance
+Martin Busch,martin.busch@wez-lab.example,Administration & Finance,Accountant,WEZ,Member,Finance
+Isabel Kuhn,isabel.kuhn@wez-lab.example,Administration & Finance,HR & People Operations Specialist,WEZ,Member,HR
+Florian Arnold,florian.arnold@wez-lab.example,Administration & Finance,Procurement Specialist,WEZ,Member,Procurement
+Hannah Seidel,hannah.seidel@wez-lab.example,Administration & Finance,Office Administration,WEZ,Member,Standard
+Carolin Maier,carolin.maier@wez-lab.example,Communications & Knowledge Transfer,Head of Communications,WEZ,Member,Manager
+Maximilian Graf,maximilian.graf@wez-lab.example,Communications & Knowledge Transfer,Digital Communications Manager,WEZ,Member,Comms
+Elena Jäger,elena.jaeger@wez-lab.example,Communications & Knowledge Transfer,Knowledge Transfer Manager,WEZ,Member,Comms
+Moritz Lang,moritz.lang@wez-lab.example,Communications & Knowledge Transfer,Web & Content Editor,WEZ,Member,Comms
+Jonas Becker (Admin),admin.jonas.becker@wez-lab.example,IT & Digital Services,Head of IT - Privileged,WEZ,Member,Privileged
+Sarah Klein (Admin),admin.sarah.klein@wez-lab.example,IT & Digital Services,Cloud & Identity Administrator - Privileged,WEZ,Member,Privileged
+Daniel Krüger (Admin),admin.daniel.krueger@wez-lab.example,IT & Digital Services,Systems Administrator - Privileged,WEZ,Member,Privileged
+Emergency Admin 01,emergency.admin01@wez-lab.example,Emergency Access,Break-Glass Account,WEZ,Member,Emergency
+Emergency Admin 02,emergency.admin02@wez-lab.example,Emergency Access,Break-Glass Account,WEZ,Member,Emergency
+Elena Rossi,guest.elena.rossi@wez-lab.example,External Research Guests,Visiting Researcher,University of Milan,Guest,Guest
+Pierre Laurent,guest.pierre.laurent@wez-lab.example,External Research Guests,Visiting Researcher,Paris Policy Lab,Guest,Guest
+Marta Kowalska,guest.marta.kowalska@wez-lab.example,External Research Guests,External Research Partner,Warsaw Economics Institute,Guest,Guest
+Tomás García,guest.tomas.garcia@wez-lab.example,External Research Guests,External Research Partner,Iberian Policy Network,Guest,Guest
