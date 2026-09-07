@@ -100,7 +100,7 @@ No real employer, internship environment, tenant, person, email address, domain,
 
 ## Current Status
 
-### Phase 0 — Project Foundation ✅ Complete
+### Phase "Start" — Project Foundation ✅ Complete
 - Repository foundation
 - Project charter
 - Requirements
@@ -108,7 +108,7 @@ No real employer, internship environment, tenant, person, email address, domain,
 - Architecture v1
 - Dedicated Microsoft Entra Workforce tenant
 
-### Phase 1 — Identity Model ✅ Complete
+### Phase "1" — Identity Model ✅ Complete
 - 47 modeled WEZ identities
   - 38 standard workforce identities
   - 3 separate privileged administrator identities
