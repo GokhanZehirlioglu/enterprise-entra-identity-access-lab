@@ -108,7 +108,7 @@ No real employer, internship environment, tenant, person, email address, domain,
 - Architecture v1
 - Dedicated Microsoft Entra Workforce tenant
 
-### Phase "1" — Identity Model ✅ Complete
+### Phase 1 — Identity Model ✅ Complete
 - 47 modeled WEZ identities
   - 38 standard workforce identities
   - 3 separate privileged administrator identities
@@ -122,18 +122,15 @@ No real employer, internship environment, tenant, person, email address, domain,
 - Sanitized implementation evidence
 - Identity model v1
 
+### Phase 2 — Authentication & MFA ✅ Complete
+- Authentication baseline inventoried
+- Workforce Microsoft Authenticator pilot validated
+- Number matching validated
+- Privileged device-bound Passkeys implemented
+- TAP-based privileged bootstrap validated
+- TAP expiration lifecycle validated
+- Administrator-assisted emergency recovery path tested
+- Evidence and test matrix documented
+
 ### Next
-**Phase 2 — Authentication & MFA**
-
-Detailed Phase 1 documentation:
-[`docs/03-identity-model.md`](docs/03-identity-model.md)
-
-Sanitized identity data:
-- [`sanitized-samples/users.csv`](sanitized-samples/users.csv)
-- [`sanitized-samples/groups.csv`](sanitized-samples/groups.csv)
-
-Implementation evidence:
-[`images/01-identity-model/`](images/01-identity-model/)
-
-Identity model source:
-[`diagrams/identity-model-v1.mmd`](diagrams/identity-model-v1.mmd)
+**Phase 3 — Conditional Access & Emergency Access**
