@@ -1,288 +1,539 @@
 # Authentication & MFA
 
 > **Phase:** 2 — Authentication & MFA  
-> **Current status:** Step 2.1 — Authentication & MFA Design Freeze ✅ Complete  
 > **Scenario:** WEZ — fictional research organization  
-> **Design freeze date:** 2026-09-07
+> **Status:** Technical implementation and validation complete; repository closeout in progress  
+> **Date:** 2026-09-10
 
 ## Objective
 
-Design, implement and validate a modern Microsoft Entra authentication and MFA baseline for the WEZ lab without mixing authentication-method configuration with Conditional Access enforcement.
+Design, implement and validate a modern Microsoft Entra authentication and MFA baseline for the WEZ lab while keeping authentication-method configuration separate from Conditional Access enforcement.
 
-The goal is not simply to "turn on MFA." The goal is to define which authentication methods are appropriate for each identity class, implement them safely through a pilot-first rollout, validate expected behavior, capture evidence, and document the reasoning.
+Phase 2 focuses on authentication methods, registration, passwordless onboarding, validation, evidence and documentation.
 
----
-
-## Phase Boundary
-
-Phase 2 is responsible for:
-
-- authentication-method design
-- authentication-method policy
-- MFA-capable user registration
-- pilot onboarding
-- passwordless / stronger-authentication preparation where appropriate
-- positive and controlled negative validation
-- evidence and test documentation
-
-Phase 2 does **not** implement the full Conditional Access policy architecture.
-
-The following are intentionally deferred to **Phase 3 — Conditional Access & Emergency Access**:
-
-- Require MFA Conditional Access policies
-- authentication-strength enforcement
-- report-only Conditional Access rollout
-- What If validation
-- location / device / application conditions
-- break-glass Conditional Access exclusions
-- Conditional Access failure and rollback scenarios
-
-**Design principle:** Authentication methods define *how an identity can authenticate*. Conditional Access later defines *when a particular authentication requirement must be enforced*.
+Full Conditional Access enforcement remains Phase 3.
 
 ---
 
-## Identity Classes
+# 1. Design Principles
 
-Phase 2 inherits the identity boundaries implemented in Phase 1:
+The Phase 2 design was frozen before implementation.
 
-| Identity class | Count | Authentication objective |
-|---|---:|---|
-| Standard workforce | 38 | Establish a modern MFA-capable workforce baseline |
-| Separate privileged identities | 3 | Prepare for stronger, phishing-resistant authentication |
-| Emergency / break-glass identities | 2 | Preserve an independent recovery authentication path |
-| B2B guest identities | 4 | Keep guest authentication separate from internal workforce assumptions |
+## Workforce
 
-No identity redesign is required in Phase 2.
+Microsoft Authenticator is the workforce baseline.
 
----
+The goal is not to enroll all 38 synthetic workforce identities. A controlled pilot proves the design and repeatability.
 
-# Step 2.1 — Authentication & MFA Design Freeze
+## Privileged identities
 
-## Design Decision 1 — Microsoft Authenticator Is the Workforce Baseline
+Dedicated privileged-class identities use a stronger authentication posture.
 
-Microsoft Authenticator is selected as the primary modern MFA method for standard WEZ workforce identities.
+Device-bound Passkeys in Microsoft Authenticator were selected as the phishing-resistant passwordless method for the privileged pilot.
 
-The lab will not attempt to register all 38 synthetic users manually. Instead, a small controlled pilot population will be used to prove the design and implementation.
+Important: these identities are privileged-class accounts by design, but privileged Entra roles / PIM are implemented in a later phase.
 
-**Why:**
+## Emergency identities
 
-- Microsoft-native authentication method
-- appropriate for Entra-based workforce authentication
-- supports MFA registration and modern authentication flows
-- produces realistic registration and sign-in evidence
-- avoids meaningless bulk enrollment of synthetic users
+Emergency identities remain separate from workforce and privileged authentication assumptions.
 
----
+A Temporary Access Pass was tested as an administrator-assisted recovery/bootstrap path.
 
-## Design Decision 2 — Pilot First, Then Expand the Scope
+This does **not** count as full break-glass validation because TAP issuance itself depends on an already-authorized administrator.
 
-Authentication changes will be validated with a small pilot population before any broader rollout.
+Independent emergency-access authentication and Conditional Access exclusions remain Phase 3 work.
 
-Initial pilot categories should include:
+## Guests
 
-- one standard workforce identity
-- one dedicated privileged-class identity
-- an emergency identity only when the specific recovery scenario is ready to be tested
+Synthetic B2B guest objects were not forced through fake redemption or sign-in flows.
 
-The full 38-user workforce population does not need physical MFA enrollment for the lab to prove the design.
+Real guest authentication testing remains deferred until the Enterprise Application / SSO scenario.
 
-**Why:** A staged rollout reduces configuration risk and creates clearer troubleshooting evidence.
+## Enforcement boundary
 
----
+Authentication Methods answers:
 
-## Design Decision 3 — Privileged Identities Require a Stronger Authentication Posture
+> Which methods can an identity register and use?
 
-The three dedicated privileged-class identities created in Phase 1 remain separate from daily-work identities.
+Conditional Access later answers:
 
-Phase 2 will prepare these identities for stronger authentication than the standard workforce baseline.
+> Under which conditions must a particular authentication requirement be satisfied?
 
-Preferred direction:
+Legacy per-user MFA is not used as the target architecture.
 
-- Microsoft Authenticator as an available modern method
-- Passkey / FIDO2 as the stronger phishing-resistant candidate
-
-Important limitation:
-
-The three privileged identities do not yet have privileged Entra roles assigned. PIM and actual privileged-role governance belong to a later phase.
-
-Therefore the project must not claim that privileged-role access has already been protected by MFA or FIDO2.
-
-The accurate portfolio statement is:
-
-> Dedicated privileged-class identities are prepared for stronger authentication controls and later privileged-access enforcement.
+Security Defaults remains enabled during Phase 2 and is not replaced until the Phase 3 Conditional Access transition is designed and validated.
 
 ---
 
-## Design Decision 4 — Emergency Access Uses an Independent Recovery Model
+# 2. Step 2.2 — Current-State Authentication Inventory
 
-The two emergency / break-glass identities must not simply copy the normal workforce authentication dependency.
+The tenant was inventoried before settings were changed.
 
-Their purpose is tenant recovery.
+## Security Defaults
 
-Phase 2 will document and prepare a recovery-oriented authentication strategy. Actual Conditional Access exclusion, break-glass validation and monitoring are deferred to Phase 3.
+| Setting | Before-state |
+|---|---|
+| Security Defaults | Enabled |
 
-Possible strong-authentication / recovery mechanisms may include:
+## Authentication Methods Policy
 
-- independently controlled Passkey / FIDO2 credentials
-- Temporary Access Pass where appropriate for controlled bootstrap or recovery
+| Method | Target | Enabled |
+|---|---|---|
+| Passkey (FIDO2) | All users | Yes |
+| Microsoft Authenticator | All users | Yes |
+| SMS | — | No |
+| Temporary Access Pass | All users | Yes |
+| Hardware OATH tokens (Preview) | — | No |
+| Software OATH tokens | All users | Yes |
+| Voice call | — | No |
+| Email OTP | All users | Yes |
+| Certificate-based authentication | — | No |
+| Verified ID | — | No |
+| QR code | — | No |
 
-No emergency authentication mechanism will be treated as a normal daily sign-in method.
+## Microsoft Authenticator before-state
+
+| Setting | Value |
+|---|---|
+| Enabled | Yes |
+| Target | All users |
+| Registration | Optional |
+| Authentication mode | Any |
+| Authenticator OTP | Allowed |
+| Number matching | Enabled / All users |
+| Application name in notifications | Microsoft managed |
+| Geographic location in notifications | Microsoft managed |
+
+## Passkey (FIDO2) before-state
+
+| Setting | Value |
+|---|---|
+| Enabled | Yes |
+| Target | All users |
+| Profile | Default passkey profile |
+| Self-service setup | Allowed |
+| Passkey types | Device-bound + Synced |
+| Attestation | Not enforced |
+| Key restrictions | None |
+
+## Temporary Access Pass before-state
+
+| Setting | Value |
+|---|---|
+| Enabled | Yes |
+| Target | All users |
+| Minimum lifetime | 1 hour |
+| Maximum lifetime | 8 hours |
+| Default lifetime | 1 hour |
+| One-time use | No |
+| Length | 8 characters |
+
+## Registration Campaign before-state
+
+| Setting | Value |
+|---|---|
+| State | Microsoft managed |
+| Method | Passkey (FIDO2) |
+| Include | All users |
+| Exclude | None |
+
+## Authentication Settings before-state
+
+| Setting | Value |
+|---|---|
+| Report suspicious activity | Microsoft managed / All users |
+| System-preferred authentication | Microsoft managed / All users |
+
+## User registration before-state
+
+The modeled WEZ identities had no registered authentication methods.
+
+Observed state:
+
+- MFA capable: Not Capable
+- Passwordless capable: Not Capable
+- SSPR capable: Not Capable
+- no registered methods visible
+
+This established a clean before-state for the Phase 2 rollout.
 
 ---
 
-## Design Decision 5 — B2B Guests Remain a Separate Authentication Scenario
+# 3. Step 2.3 — Pilot Cohort
 
-The four Phase 1 B2B guest objects are synthetic identities.
+A six-identity pilot / validation cohort was selected.
 
-The lab will not fake invitation redemption or external sign-in merely to create screenshots.
+## Standard workforce pilots
 
-Guest-specific authentication behavior will be documented in Phase 2, while real controlled guest sign-in testing can be performed later with an appropriate external test identity when the Enterprise Application / SSO scenario requires it.
+| Identity | Department / Persona | Purpose |
+|---|---|---|
+| Mia Schneider | Researcher | Normal workforce authentication |
+| Lisa Werner | Finance Controller | Business-sensitive but non-privileged workforce |
+| Emilia Haas | Service Desk Specialist | IT workforce but non-privileged |
 
----
+## Privileged-class pilots
 
-## Design Decision 6 — Temporary Access Pass Is a Bootstrap / Recovery Tool
+| Identity | Persona | Purpose |
+|---|---|---|
+| Sarah Klein (Admin) | Cloud & Identity Administrator — Privileged | Primary TAP → Passkey bootstrap |
+| Jonas Becker (Admin) | Head of IT — Privileged | Repeat privileged Passkey validation |
 
-Temporary Access Pass (TAP) is not selected as a normal everyday authentication method.
+## Emergency pilot
 
-Its intended role in the lab is:
+| Identity | Purpose |
+|---|---|
+| Emergency Admin 01 | Administrator-assisted temporary recovery/bootstrap validation |
 
-- bootstrap of passwordless authentication
-- controlled recovery
-- registration of stronger methods where appropriate
+## Control identities kept untouched
 
-If TAP is tested, its lifetime, one-time-use behavior and target scope must be explicitly documented.
+- Daniel Krüger (Admin)
+- Emergency Admin 02
 
----
-
-## Design Decision 7 — SMS and Voice Are Not the Target Baseline
-
-SMS and voice-call authentication are not selected as the preferred WEZ workforce MFA baseline.
-
-The project prioritizes stronger modern methods rather than enabling every method merely because Entra supports it.
-
-Any weaker or legacy-compatible method must have a concrete requirement before it is introduced.
-
----
-
-## Design Decision 8 — Legacy Per-User MFA Is Not the Target Architecture
-
-Legacy per-user MFA will not be used as the main MFA enforcement model for this project.
-
-The project separates:
-
-1. authentication-method availability and registration in Phase 2
-2. access-policy enforcement through Conditional Access in Phase 3
-
-This keeps the architecture aligned with the later Conditional Access design and prevents competing enforcement models from being mixed unnecessarily.
+These remain useful as future control / expected-failure identities.
 
 ---
 
-## Design Decision 9 — Security Defaults Is Not the Final Enforcement Architecture
+# 4. Pilot Scope Groups
 
-Security Defaults may exist as the tenant's current baseline protection.
+Two assigned Security groups were created.
 
-It will be inventoried before changes are made.
+## `GRP-AUTH-PILOT-WORKFORCE`
 
-The project does not treat Security Defaults as the final WEZ authentication / access-control architecture because the later enterprise scenario requires granular Conditional Access controls.
+Members:
 
-No Security Defaults change is made as part of Step 2.1.
+- Mia Schneider
+- Lisa Werner
+- Emilia Haas
 
-Its current state and the migration point toward Conditional Access will be documented separately.
+Purpose:
+
+> Phase 2 pilot scope for standard workforce authentication and MFA validation.
+
+## `GRP-AUTH-PILOT-PRIVILEGED`
+
+Members:
+
+- Sarah Klein (Admin)
+- Jonas Becker (Admin)
+
+Purpose:
+
+> Phase 2 pilot scope for stronger authentication and Passkey/FIDO2 validation of privileged-class identities.
+
+Emergency Admin 01 was intentionally not added to either pilot group.
 
 ---
 
-## Design Decision 10 — Evidence Must Prove a Specific Claim
+# 5. Step 2.4 — Authentication Policy Implementation
 
-Screenshots are evidence, not decoration.
+## Microsoft Authenticator
 
-Every captured image must answer:
+Microsoft Authenticator remained enabled for All users.
 
-> What does this prove?
+Reason:
 
-Planned Phase 2 evidence categories:
+- Security Defaults remains active.
+- method availability is different from pilot enrollment scope.
+- Phase 2 validates a controlled cohort without creating an artificial tenant-wide method restriction.
 
-- current Security Defaults state
-- current Authentication Methods policy
-- pilot targeting / scope
-- successful authentication-method registration
-- successful MFA-capable authentication
-- stronger-authentication / passwordless evidence if implemented
-- controlled negative result where appropriate
-- final test-matrix result
+## Passkey (FIDO2)
 
-All public evidence must be sanitized before it is committed.
+Passkey remained available for All users.
 
-Never expose:
+Reason:
 
+> Availability is not enforcement.
+
+The active Phase 2 Passkey pilot is privileged-class, while later Conditional Access authentication-strength enforcement belongs to Phase 3.
+
+## Registration Campaign
+
+The Passkey registration campaign was narrowed from All users to:
+
+`GRP-AUTH-PILOT-PRIVILEGED`
+
+The campaign remains Microsoft managed.
+
+This prevents the whole synthetic tenant from being actively nudged toward Passkey registration while the privileged pilot is validated.
+
+## Temporary Access Pass
+
+TAP remained available at policy level.
+
+TAP issuance was performed per user only when a bootstrap/recovery requirement existed.
+
+---
+
+# 6. Step 2.5-A — Workforce Microsoft Authenticator Enrollment
+
+Three workforce identities were enrolled:
+
+- Mia Schneider
+- Lisa Werner
+- Emilia Haas
+
+Observed user flow:
+
+```text
+No registered MFA method
+        ↓
+Security Defaults registration requirement
+        ↓
+Microsoft Authenticator enrollment
+        ↓
+QR/device registration
+        ↓
+Number matching validation
+        ↓
+Authenticator added
+        ↓
+Successful account access
+```
+
+## Validation result
+
+All three workforce pilots became:
+
+- MFA capable: Capable
+- default MFA method: Microsoft Authenticator app (push notification)
+
+Registered methods included:
+
+- Microsoft Authenticator app (push notification)
+- Software OATH token
+
+The three-user result demonstrates repeatability across Research, Finance and IT Service Desk personas.
+
+---
+
+# 7. Step 2.5-B — Privileged Passkey / FIDO2 Enrollment
+
+The privileged pilot used a stronger passwordless authentication workflow.
+
+## Sarah Klein (Admin)
+
+Flow:
+
+```text
+No usable strong authentication method
+        ↓
+Administrator issues 1-hour Temporary Access Pass
+        ↓
+Sarah signs in with TAP
+        ↓
+Passkey in Microsoft Authenticator registered
+        ↓
+Fresh browser session
+        ↓
+Cross-device Passkey sign-in
+        ↓
+Phone / Authenticator completes FIDO2 authentication
+        ↓
+Successful passwordless access
+```
+
+Validation showed:
+
+- Passkey registered
+- Passkey detail: Authenticator — iOS
+- system-preferred MFA method: FIDO2
+- successful fresh Passkey sign-in
+- TAP later moved to Non-usable authentication methods with status `TAP expired`
+
+This proves the TAP lifecycle was time-limited and that access continued through the long-term Passkey credential rather than the bootstrap credential.
+
+## Jonas Becker (Admin)
+
+Jonas repeated the privileged baseline:
+
+- Temporary Access Pass bootstrap
+- Passkey in Microsoft Authenticator
+- device-bound Passkey
+- successful fresh Passkey sign-in
+- backend registration validation
+
+Central User Registration Details showed both Sarah and Jonas as MFA capable with Passkey (Microsoft Authenticator) registered.
+
+## Privileged design result
+
+The privileged-class pilot is standardized on:
+
+> Device-bound Passkey in Microsoft Authenticator
+
+A physical FIDO2 security key was not available in the lab.
+
+The lab therefore does not claim hardware-key validation.
+
+A hardware FIDO2 security key remains a valid production alternative for elevated-privilege and independent emergency-access scenarios.
+
+---
+
+# 8. Temporary Access Pass Lesson Learned
+
+Two TAP usage models were considered:
+
+- one-time TAP
+- time-limited multi-use TAP
+
+During the lab, one-time TAP proved operationally fragile when the registration workflow was interrupted or another authentication step was requested.
+
+The final lab approach used a short-lived multi-use TAP for controlled bootstrap.
+
+This is documented as an operational lab decision, not as a universal production rule.
+
+Core lifecycle:
+
+```text
+Issue
+↓
+Bootstrap
+↓
+Register long-term credential
+↓
+Validate long-term credential
+↓
+TAP expires
+```
+
+TAP is not a normal daily authentication method.
+
+---
+
+# 9. Emergency Admin 01 — Scope and Limitation
+
+Emergency Admin 01 successfully authenticated using an administrator-issued Temporary Access Pass.
+
+What this proves:
+
+> An administrator-assisted temporary recovery/bootstrap path works.
+
+What this does **not** prove:
+
+> Independent break-glass access works when all normal administrators or authentication dependencies are unavailable.
+
+No Authenticator or Passkey was intentionally registered for Emergency Admin 01 during this Phase 2 test.
+
+Reason:
+
+Reusing the same Authenticator device used by privileged admins would recreate the same dependency and would not provide a meaningful independent emergency-access design.
+
+Independent break-glass credentials, Conditional Access exclusion, monitoring and periodic emergency-access validation remain Phase 3 work.
+
+---
+
+# 10. Validation Summary
+
+| Scenario | Expected result | Actual result | Status |
+|---|---|---|---|
+| Workforce pilot enrollment | Authenticator registration succeeds | 3/3 pilots registered successfully | PASS |
+| Workforce number matching | Push validation uses number matching | Number matching observed | PASS |
+| Workforce backend validation | Pilots become MFA capable | Mia, Lisa and Emilia show Capable | PASS |
+| Sarah TAP bootstrap | Temporary bootstrap sign-in works | Successful | PASS |
+| Sarah Passkey registration | Device-bound Passkey registers | Passkey / Authenticator-iOS registered | PASS |
+| Sarah fresh passwordless sign-in | Passkey authenticates without TAP/password | Successful | PASS |
+| Sarah TAP lifecycle | TAP becomes unusable after lifetime | `TAP expired` observed | PASS |
+| Jonas privileged baseline | Privileged Passkey flow is repeatable | Registration and sign-in successful | PASS |
+| Emergency temporary recovery | Emergency identity can use admin-issued TAP | Successful | PASS |
+| Independent break-glass access | Independent credential / failure-domain test | Not implemented in Phase 2 | DEFERRED |
+
+A separate expired-TAP sign-in rejection was not captured. The tenant did, however, report the expired TAP as a non-usable authentication method. No stronger claim is made.
+
+---
+
+# 11. Evidence Plan
+
+Public evidence should be sanitized before commit.
+
+Recommended evidence set:
+
+| File | What it proves |
+|---|---|
+| `01-security-defaults-before.png` | Security Defaults was enabled before implementation |
+| `02-authentication-methods-before.png` | Authentication-method baseline before rollout |
+| `03-authentication-pilot-groups.png` | Staged workforce / privileged pilot scopes |
+| `04-workforce-registration-required.png` | Unregistered workforce user was required to set up authentication |
+| `05-workforce-number-matching.png` | Authenticator number matching validation |
+| `06-workforce-authenticator-added.png` | Successful Authenticator enrollment |
+| `07-workforce-registration-validation.png` | Three workforce pilots became MFA capable |
+| `08-privileged-passkey-device-bound.png` | Device-bound Passkey exists for privileged identity |
+| `09-privileged-passkey-validation.png` | Privileged Passkey registered / system preferred FIDO2 |
+| `10-privileged-passwordless-signin.png` | Fresh Passkey authentication succeeded |
+| `11-tap-expired.png` | TAP lifecycle ended as designed |
+| `12-emergency-tap-recovery.png` | Administrator-assisted temporary recovery/bootstrap succeeded |
+
+Do not publish:
+
+- QR registration secrets
+- TAP passcodes
+- temporary passwords
+- real tenant ID
 - real tenant domain
-- tenant ID
-- personal or operator email addresses
+- operator email
 - Object IDs / GUIDs
-- subscription IDs
-- passwords
-- secrets
-- tokens
-- private identifiers
+- secrets or tokens
 
 ---
 
-# Phase 2 Implementation Sequence
+# 12. Phase 2 Lessons Learned
 
-The frozen execution sequence is:
-
-1. **Step 2.1 — Authentication & MFA Design Freeze** ✅
-2. **Step 2.2 — Current Authentication Baseline / Inventory**
-3. **Step 2.3 — Pilot Identity & Licensing Preparation**
-4. **Step 2.4 — Authentication Methods Policy Implementation**
-5. **Step 2.5 — MFA Method Registration / Enrollment**
-6. **Step 2.6 — Positive Validation Tests**
-7. **Step 2.7 — Controlled Negative / Failure Test**
-8. **Step 2.8 — Evidence + Test Matrix**
-9. **Step 2.9 — GitHub Documentation**
-10. **Step 2.10 — Phase 2 Quality Gate**
+1. Authentication-method availability is not the same as authentication enforcement.
+2. MFA capable does not mean MFA is required on every sign-in.
+3. Registration Campaign is a nudge / enrollment mechanism, not a Conditional Access control.
+4. System-preferred authentication can prefer a stronger registered method without replacing Conditional Access enforcement.
+5. Microsoft Authenticator push and Passkey in Microsoft Authenticator are different credential models even though both use the same mobile application.
+6. TAP is useful as a short-lived bootstrap credential but should not become a standing authentication dependency.
+7. A working TAP path for an emergency account is not equivalent to independent break-glass validation.
+8. Realistic lab documentation should expose limitations rather than simulate unavailable hardware or claim untested controls.
+9. Repeating the privileged Passkey baseline across two accounts is more meaningful than using different technologies only for feature variety.
+10. Pilot cohorts create controlled rollout evidence without meaningless bulk enrollment of synthetic identities.
 
 ---
 
-# Step 2.1 Quality Gate
+# 13. Deferred to Phase 3
 
-Step 2.1 is complete because the following decisions are frozen:
+Phase 3 will implement the access-policy layer:
 
-- [x] workforce baseline method defined
-- [x] pilot-first rollout accepted
-- [x] privileged authentication direction defined
-- [x] emergency authentication treated separately
-- [x] B2B guest behavior kept separate
-- [x] TAP purpose defined
-- [x] SMS / voice excluded from the target baseline
-- [x] legacy per-user MFA excluded from the target architecture
-- [x] Security Defaults identified as a current-state control, not the final architecture
-- [x] Conditional Access explicitly deferred to Phase 3
-- [x] evidence standard defined
-- [x] public sanitization requirements confirmed
-- [x] GitHub documentation path confirmed
+- Conditional Access policy design
+- staged / report-only rollout
+- MFA enforcement
+- phishing-resistant authentication strength for privileged access
+- break-glass exclusions
+- independent emergency-access design
+- What If validation
+- sign-in log validation
+- controlled Conditional Access failure scenario
+- rollback path
 
-**STEP 2.1 STATUS: COMPLETE**
+Daniel Krüger (Admin) remains useful as an unregistered privileged control identity for later policy validation.
+
+Emergency Admin 02 remains untouched as a second emergency identity.
 
 ---
 
-# Next Step
+# 14. Phase 2 Quality Gate
 
-## Step 2.2 — Current Authentication Baseline / Inventory
+## Technical
 
-Before changing authentication settings, record the tenant's current state.
+- [x] authentication design frozen
+- [x] before-state inventoried
+- [x] pilot cohort defined
+- [x] pilot scope groups created
+- [x] workforce Authenticator enrollment validated
+- [x] number matching validated
+- [x] privileged Passkey enrollment validated
+- [x] privileged fresh passwordless sign-in validated
+- [x] TAP lifecycle / expiry observed
+- [x] administrator-assisted emergency TAP path validated
+- [x] limitations documented
+- [x] Conditional Access kept out of Phase 2
 
-Inventory:
+## Repository closeout
 
-- Security Defaults
-- Authentication Methods policy
-- Microsoft Authenticator
-- Passkey / FIDO2
-- Temporary Access Pass
-- Software OATH
-- SMS
-- Voice call
-- Email OTP
-- other enabled or disabled authentication methods
-- relevant registration / system-preferred authentication settings
+- [ ] screenshots sanitized
+- [ ] selected evidence copied to `images/02-authentication-mfa/`
+- [ ] this file committed as `docs/04-authentication-mfa.md`
+- [ ] `tests/test-matrix.md` updated
+- [ ] README status changed to Phase 2 Complete / Phase 3 Next
+- [ ] final GitHub commit / push verified
 
-The result of Step 2.2 becomes the documented **before-state** for Phase 2.
+**PHASE 2 STATUS: TECHNICALLY COMPLETE — REPOSITORY CLOSEOUT PENDING**
