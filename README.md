@@ -96,8 +96,6 @@ No real employer, internship environment, tenant, person, email address, domain,
 
 
 
-## Status
-
 ## Current Status
 
 ### Phase "Start" — Project Foundation ✅ Complete
