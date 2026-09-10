@@ -76,6 +76,7 @@ The editable source remains in [`diagrams/architecture-v1.drawio`](diagrams/arch
 - [`docs/01-requirements.md`](docs/01-requirements.md)
 - [`docs/02-architecture.md`](docs/02-architecture.md)
 - [`docs/03-identity-model.md`](docs/03-identity-model.md)
+- [`docs/04-authentication-mfa.md`](docs/04-authentication-mfa.md)
 - [`tests/test-matrix.md`](tests/test-matrix.md)
 - [`tests/failure-scenarios.md`](tests/failure-scenarios.md)
 - [`sanitized-samples/users.csv`](sanitized-samples/users.csv)
