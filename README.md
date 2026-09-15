@@ -77,6 +77,8 @@ The editable source remains in [`diagrams/architecture-v1.drawio`](diagrams/arch
 - [`docs/02-architecture.md`](docs/02-architecture.md)
 - [`docs/03-identity-model.md`](docs/03-identity-model.md)
 - [`docs/04-authentication-mfa.md`](docs/04-authentication-mfa.md)
+- [`docs/05-conditional-access.md`](docs/05-conditional-access.md)
+- [`docs/06-emergency-access.md`](docs/06-emergency-access.md)
 - [`tests/test-matrix.md`](tests/test-matrix.md)
 - [`tests/failure-scenarios.md`](tests/failure-scenarios.md)
 - [`sanitized-samples/users.csv`](sanitized-samples/users.csv)
@@ -87,15 +89,11 @@ No real employer, internship environment, tenant, person, email address, domain,
 
 `wez-lab.example` is a documentation-only fictional domain.
 
-
-
 ## Foundation Evidence
 
 - Dedicated Microsoft Entra Workforce tenant provisioned for the fictional WEZ organization.
-- Environment initialized with Microsoft Entra ID Premium P2.
+- Environment initialized with Microsoft Entra ID Premium capabilities required for the lab scenarios.
 - Sensitive tenant and account information has been sanitized for public documentation.
-
-
 
 ## Current Status
 
@@ -131,5 +129,22 @@ No real employer, internship environment, tenant, person, email address, domain,
 - Administrator-assisted emergency recovery path tested
 - Evidence and test matrix documented
 
+### Phase 3 — Conditional Access & Emergency Access ✅ Complete
+- Premium-licensed Conditional Access pilot cohort created
+- Workforce MFA authentication strength enforced
+- Privileged phishing-resistant MFA enforced
+- Legacy authentication block policy implemented
+- Device Code Flow block policy implemented
+- Emergency / break-glass exclusions validated with What If
+- Report-only rollout validated before enforcement
+- Security Defaults transitioned to Conditional Access
+- Workforce and privileged enforcement success validated in Sign-in Logs
+- Controlled privileged authentication failure captured
+- Root cause identified from Conditional Access evidence
+- TAP → Passkey remediation performed
+- Successful privileged retest captured
+- Rollback / recovery runbook documented
+- Independent emergency credential remains a documented limitation
+
 ### Next
-**Phase 3 — Conditional Access & Emergency Access**
+**Phase 4 — RBAC & Least Privilege**
