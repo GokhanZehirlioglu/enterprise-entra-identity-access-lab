@@ -68,7 +68,7 @@ flowchart LR
     AUTO <--> E
 ```
 
-The editable source remains in [`diagrams/architecture-v1.drawio`](diagrams/architecture-v1.drawio). GitHub renders the Mermaid version above directly.
+The editable source remains in [`diagrams/architecture-v1.drawio`](diagrams/architecture-v1.drawio).
 
 ## Documentation
 
@@ -79,6 +79,7 @@ The editable source remains in [`diagrams/architecture-v1.drawio`](diagrams/arch
 - [`docs/04-authentication-mfa.md`](docs/04-authentication-mfa.md)
 - [`docs/05-conditional-access.md`](docs/05-conditional-access.md)
 - [`docs/06-emergency-access.md`](docs/06-emergency-access.md)
+- [`docs/07-rbac-least-privilege.md`](docs/07-rbac-least-privilege.md)
 - [`tests/test-matrix.md`](tests/test-matrix.md)
 - [`tests/failure-scenarios.md`](tests/failure-scenarios.md)
 - [`sanitized-samples/users.csv`](sanitized-samples/users.csv)
@@ -88,12 +89,6 @@ The editable source remains in [`diagrams/architecture-v1.drawio`](diagrams/arch
 No real employer, internship environment, tenant, person, email address, domain, device, ticket, IP address, GUID, subscription ID, secret or token is used in public project content.
 
 `wez-lab.example` is a documentation-only fictional domain.
-
-## Foundation Evidence
-
-- Dedicated Microsoft Entra Workforce tenant provisioned for the fictional WEZ organization.
-- Environment initialized with Microsoft Entra ID Premium capabilities required for the lab scenarios.
-- Sensitive tenant and account information has been sanitized for public documentation.
 
 ## Current Status
 
@@ -107,44 +102,42 @@ No real employer, internship environment, tenant, person, email address, domain,
 
 ### Phase 1 — Identity Model ✅ Complete
 - 47 modeled WEZ identities
-  - 38 standard workforce identities
-  - 3 separate privileged administrator identities
-  - 2 emergency / break-glass identities
-  - 4 B2B guest identities
-- 8 department Security groups
-- 4 Conditional Access scope groups
-- Standard / privileged account separation
+- Department and security-policy scope groups
+- Standard / privileged separation
 - Emergency access isolation
-- Guest identity model
+- B2B guest model
 - Sanitized implementation evidence
-- Identity model v1
 
 ### Phase 2 — Authentication & MFA ✅ Complete
 - Authentication baseline inventoried
 - Workforce Microsoft Authenticator pilot validated
 - Number matching validated
 - Privileged device-bound Passkeys implemented
-- TAP-based privileged bootstrap validated
-- TAP expiration lifecycle validated
-- Administrator-assisted emergency recovery path tested
+- TAP bootstrap / expiry lifecycle validated
 - Evidence and test matrix documented
 
 ### Phase 3 — Conditional Access & Emergency Access ✅ Complete
-- Premium-licensed Conditional Access pilot cohort created
 - Workforce MFA authentication strength enforced
 - Privileged phishing-resistant MFA enforced
-- Legacy authentication block policy implemented
-- Device Code Flow block policy implemented
-- Emergency / break-glass exclusions validated with What If
-- Report-only rollout validated before enforcement
-- Security Defaults transitioned to Conditional Access
-- Workforce and privileged enforcement success validated in Sign-in Logs
-- Controlled privileged authentication failure captured
-- Root cause identified from Conditional Access evidence
-- TAP → Passkey remediation performed
-- Successful privileged retest captured
-- Rollback / recovery runbook documented
-- Independent emergency credential remains a documented limitation
+- Legacy authentication and Device Code Flow blocking
+- Report-only → What If → enforcement rollout
+- Emergency exclusion validation
+- Controlled privileged failure → RCA → TAP → Passkey → successful retest
+- Rollback / recovery documented
+
+### Phase 4 — RBAC & Least Privilege ✅ Complete
+- Dedicated Azure Resource Group + low-cost Storage Account lab scope
+- Group-based Reader and Contributor role assignments
+- Resource Group scoped RBAC with inherited access at the Storage Account
+- Reader read access validated
+- Reader write denial validated
+- No-assignment control identity validated
+- Controlled RBAC group-membership failure executed
+- Role / scope / membership RCA completed
+- Least-privilege membership remediation performed
+- Contributor write retest succeeded
+- Rollback model documented
+- Sanitized evidence package created
 
 ### Next
-**Phase 4 — RBAC & Least Privilege**
+**Phase 5 — PIM / Governance**
