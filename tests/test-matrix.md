@@ -15,13 +15,13 @@
 | T11 | Expired TAP sign-in rejection | An expired TAP is rejected during a fresh sign-in attempt | Separate rejected sign-in attempt not captured; expiry state only was validated | NOT RUN |
 | T12 | User outside application group | Access denied | TBD | NOT RUN |
 | T13 | Finance user in approved group | Access allowed | TBD | NOT RUN |
-| T14 | Standard user attempts privileged operation | Denied | TBD | NOT RUN |
+| T14 | Standard user without Phase 4 Azure RBAC assignment accesses the lab resource | Resource access unavailable / denied | Lisa Werner had no Phase 4 RBAC group assignment and could not access the Storage resource | PASS |
 | T15 | Privileged admin activates eligible role | Time-limited privilege where licensing permits | TBD | NOT RUN |
 | T16 | Incorrect CA group scope | Failure visible in sign-in evidence | TBD | NOT RUN |
 | T17 | Guest accesses assigned research app | Allowed under guest controls | TBD | NOT RUN |
 | T18 | Guest attempts unassigned app | Denied | TBD | NOT RUN |
-| T19 | Azure Reader attempts write | Denied | TBD | NOT RUN |
-| T20 | Azure Contributor performs permitted change | Allowed | TBD | NOT RUN |
+| T19 | Azure Reader attempts write | Denied | Mia Schneider could inspect the Storage Account but tag assignment failed | PASS |
+| T20 | Azure Contributor performs permitted change | Allowed | Emilia Haas successfully assigned a Storage Account tag after Contributor membership was applied | PASS |
 | T21 | Enterprise App / SSO misconfiguration | Failure captured and RCA completed | TBD | NOT RUN |
 | T22 | Graph script lacks permission | Predictable failure and permission RCA | TBD | NOT RUN |
 | T23 | Mover changes department | Old access removed, new access applied | TBD | NOT RUN |
@@ -38,11 +38,13 @@
 | T34 | Privileged user without phishing-resistant credential | Enforced privileged policy prevents completion of sign-in | Daniel Krüger (Admin) sign-in interrupted; CA policy result `Failure`, error `50072` | PASS |
 | T35 | Privileged remediation | Strong credential is added without weakening the policy | Daniel used short-lived TAP, registered Passkey, then CA policy returned `Success` | PASS |
 | T36 | Conditional Access rollback runbook | Recovery path is documented before phase closeout | Policy-state, scope, credential-readiness and Security Defaults fallback paths documented; full tenant-wide rollback not executed | DOCUMENTED |
+| T37 | RBAC group-membership mismatch remediation | Operator write fails as Reader, correct membership restores permitted write without broader privilege | Emilia write failed as Reader; Reader membership removed, Contributor membership added; retest succeeded | PASS |
 
 ## Notes
 
 - Phase 2 validated authentication methods and registration.
 - Phase 3 validated Conditional Access staging, report-only evaluation, enforcement, troubleshooting and remediation.
+- Phase 4 validated group-based Azure RBAC, Resource Group scope inheritance, Reader/Contributor separation, a no-assignment control and an RBAC membership failure → RCA → remediation → retest chain.
 - `MFA capable` means the identity has an MFA-capable registered method. It does not by itself mean MFA is required on every sign-in.
 - Emergency Admin 01 TAP testing proves administrator-assisted recovery/bootstrap, not fully independent break-glass authentication.
 - Phase 3 validated the emergency Conditional Access exclusion, but an independent emergency credential remains intentionally unclaimed.
