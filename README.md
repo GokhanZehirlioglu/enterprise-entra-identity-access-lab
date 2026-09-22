@@ -36,8 +36,6 @@ The initial dataset contains **47 directory identities**:
 - 2 emergency / break-glass accounts
 - 4 guest identities
 
-The larger dataset is intentional: enough variation for group-based access, Conditional Access scoping, privileged access, guest lifecycle, Access Reviews and later Joiner–Mover–Leaver automation without turning the lab into meaningless bulk-user creation.
-
 ## Architecture v1
 
 ```mermaid
@@ -68,8 +66,6 @@ flowchart LR
     AUTO <--> E
 ```
 
-The editable source remains in [`diagrams/architecture-v1.drawio`](diagrams/architecture-v1.drawio).
-
 ## Documentation
 
 - [`docs/00-project-charter.md`](docs/00-project-charter.md)
@@ -80,13 +76,15 @@ The editable source remains in [`diagrams/architecture-v1.drawio`](diagrams/arch
 - [`docs/05-conditional-access.md`](docs/05-conditional-access.md)
 - [`docs/06-emergency-access.md`](docs/06-emergency-access.md)
 - [`docs/07-rbac-least-privilege.md`](docs/07-rbac-least-privilege.md)
+- [`docs/08-pim-governance.md`](docs/08-pim-governance.md)
+- [`diagrams/privileged-access-flow.mmd`](diagrams/privileged-access-flow.mmd)
 - [`tests/test-matrix.md`](tests/test-matrix.md)
 - [`tests/failure-scenarios.md`](tests/failure-scenarios.md)
 - [`sanitized-samples/users.csv`](sanitized-samples/users.csv)
 
 ## Security / Sanitization Notice
 
-No real employer, internship environment, tenant, person, email address, domain, device, ticket, IP address, GUID, subscription ID, secret or token is used in public project content.
+No real employer, internship environment, tenant, personal email address, private domain, device, ticket, IP address, GUID, subscription ID, secret or token is used in public project content.
 
 `wez-lab.example` is a documentation-only fictional domain.
 
@@ -129,15 +127,25 @@ No real employer, internship environment, tenant, person, email address, domain,
 - Dedicated Azure Resource Group + low-cost Storage Account lab scope
 - Group-based Reader and Contributor role assignments
 - Resource Group scoped RBAC with inherited access at the Storage Account
-- Reader read access validated
-- Reader write denial validated
-- No-assignment control identity validated
-- Controlled RBAC group-membership failure executed
-- Role / scope / membership RCA completed
-- Least-privilege membership remediation performed
-- Contributor write retest succeeded
-- Rollback model documented
-- Sanitized evidence package created
+- Reader read / write boundary validated
+- No-assignment control validated
+- Controlled RBAC group-membership failure → RCA → least-privilege remediation → successful retest
+
+### Phase 5 — PIM / Governance ✅ Complete
+- Existing group-based Azure RBAC model preserved
+- Standing Contributor-group membership converted to PIM eligibility
+- 1-hour JIT activation policy
+- MFA, business justification and approval required
+- Two approvers configured
+- Pre-activation access denial validated
+- Approval-based activation validated
+- Temporary Contributor access restored through active group membership
+- Management-plane write validated during activation
+- PIM user audit history captured
+- Manual deactivation validated
+- Post-deactivation access denial validated
+- Governance / periodic eligibility-review model documented
+- Access Review execution is not claimed
 
 ### Next
-**Phase 5 — PIM / Governance**
+**Phase 6 — Enterprise App / SSO**
