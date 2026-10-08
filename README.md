@@ -77,16 +77,20 @@ flowchart LR
 - [`docs/06-emergency-access.md`](docs/06-emergency-access.md)
 - [`docs/07-rbac-least-privilege.md`](docs/07-rbac-least-privilege.md)
 - [`docs/08-pim-governance.md`](docs/08-pim-governance.md)
+- [`docs/09-enterprise-app-sso.md`](docs/09-enterprise-app-sso.md)
 - [`diagrams/privileged-access-flow.mmd`](diagrams/privileged-access-flow.mmd)
+- [`diagrams/enterprise-app-sso-flow.mmd`](diagrams/enterprise-app-sso-flow.mmd)
 - [`tests/test-matrix.md`](tests/test-matrix.md)
 - [`tests/failure-scenarios.md`](tests/failure-scenarios.md)
 - [`sanitized-samples/users.csv`](sanitized-samples/users.csv)
 
 ## Security / Sanitization Notice
 
-No real employer, internship environment, tenant, personal email address, private domain, device, ticket, IP address, GUID, subscription ID, secret or token is used in public project content.
+The WEZ organization, personas and working identities are synthetic and belong only to this dedicated lab scenario. Public evidence may show lab-only tenant identifiers such as synthetic `onmicrosoft.com` UPNs, application IDs or request/correlation IDs when they are part of troubleshooting evidence.
 
-`wez-lab.example` is a documentation-only fictional domain.
+No production/employer tenant data, personal mailbox data, production device/IP data, ticket data, passwords, Temporary Access Pass values, access/refresh tokens, client secrets, certificate private keys or other live credentials are published.
+
+`wez-lab.example` remains the documentation-only fictional domain used in sanitized examples.
 
 ## Current Status
 
@@ -147,5 +151,21 @@ No real employer, internship environment, tenant, personal email address, privat
 - Governance / periodic eligibility-review model documented
 - Access Review execution is not claimed
 
+### Phase 6 — Enterprise App / SSO ✅ Complete
+- Microsoft Entra gallery application integrated as **WEZ Research Collaboration Portal**
+- SAML 2.0 federation configured with Entra ID as Identity Provider
+- Group-based application assignment through `GRP-APP-RESEARCH-PORTAL-USERS`
+- `Assignment required = Yes` enforced
+- Lisa Werner positive SP-initiated SSO validated
+- Entra Sign-in Log success captured
+- Mia Schneider unassigned test produced `AADSTS50105`
+- Sign-in-log RCA isolated the failure to missing application assignment
+- Group-membership remediation restored access without weakening the application control
+- Service Provider local-user mapping dependency observed and resolved
+- My Apps launch path validated
+- `department` and `jobTitle` SAML claims configured
+- Temporary Mia access removed after validation; least-privilege final state restored
+- Raw custom-claim assertion decoding is not claimed
+
 ### Next
-**Phase 6 — Enterprise App / SSO**
+**Phase 7 — Project-1 PowerShell / Microsoft Graph layer**

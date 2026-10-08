@@ -1,0 +1,26 @@
+flowchart TD
+    U["WEZ user<br/>Lisa / Mia"]
+    MY["Microsoft My Apps<br/>(IdP-initiated launch)"]
+    SPLOGIN["SAML Toolkit<br/>SP-initiated login"]
+    ENTRA["Microsoft Entra ID<br/>Identity Provider"]
+    AUTH["Authentication +<br/>Conditional Access"]
+    ASSIGN{"Effective assignment via<br/>GRP-APP-RESEARCH-PORTAL-USERS?"}
+    DENY["AADSTS50105<br/>Access denied"]
+    ASSERT["SAML assertion<br/>NameID = UPN/emailAddress<br/>department + jobTitle configured"]
+    SP["SAML Toolkit<br/>Service Provider"]
+    MAP{"Matching local Toolkit<br/>test user exists?"}
+    APPERR["SP-side generic error<br/>application-local mapping"]
+    ALLOW["Application session<br/>SSO success"]
+
+    U --> SPLOGIN
+    U --> MY
+    SPLOGIN --> ENTRA
+    MY --> ENTRA
+    ENTRA --> AUTH
+    AUTH --> ASSIGN
+    ASSIGN -- "No" --> DENY
+    ASSIGN -- "Yes" --> ASSERT
+    ASSERT --> SP
+    SP --> MAP
+    MAP -- "No" --> APPERR
+    MAP -- "Yes" --> ALLOW

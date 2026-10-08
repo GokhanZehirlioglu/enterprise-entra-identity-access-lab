@@ -232,3 +232,204 @@ Identity
 ```
 
 The correct fix was to align membership with the business requirement, not to grant Owner.
+
+---
+
+# Failure 3 — Enterprise application assignment enforcement
+
+**Status:** Executed and resolved  
+**Phase:** 6 — Enterprise App / SSO
+
+## Requirement
+
+Only identities with justified access to the WEZ Research Collaboration Portal should be able to obtain effective application access.
+
+The enterprise application must keep:
+
+`Assignment required = Yes`
+
+and normal access must remain group-based through:
+
+`GRP-APP-RESEARCH-PORTAL-USERS`
+
+## Controlled Setup
+
+Lisa Werner was the positive-control user and a direct member of the assigned application-access group.
+
+Mia Schneider was intentionally left outside the group.
+
+The same SAML Service Provider endpoint was used for both identities.
+
+## Positive Control
+
+Lisa completed the SP-initiated SAML flow successfully.
+
+Entra Enterprise Application Sign-in Logs later recorded:
+
+```text
+Application: WEZ Research Collaboration Portal
+Status: Success
+Conditional Access: Success
+```
+
+This established that the SAML integration itself was functional before the negative test.
+
+## Symptom
+
+Mia then attempted the same SAML sign-in while unassigned.
+
+The browser returned:
+
+`AADSTS50105`
+
+The error stated that the signed-in user was blocked because she was neither directly assigned nor a direct member of a group with application access.
+
+Evidence:
+
+- `images/06-enterprise-app-sso/07-mia-unassigned-aadsts50105.png`
+- `images/06-enterprise-app-sso/08-mia-50105-signin-log.png`
+
+## Investigation
+
+The Sign-in Log showed:
+
+```text
+Application: WEZ Research Collaboration Portal
+Status: Failure
+Sign-in error code: 50105
+Conditional Access: Success
+```
+
+The investigation separated the control layers:
+
+1. the user identity was recognized,
+2. Conditional Access was not the blocking control,
+3. the enterprise application existed and SAML configuration had already worked for Lisa,
+4. Mia did not have effective application assignment.
+
+## Root Cause
+
+> Mia was not a direct member of `GRP-APP-RESEARCH-PORTAL-USERS` and had no direct application assignment.
+
+Classification:
+
+**Enterprise application authorization / assignment mismatch**
+
+The failure was not caused by:
+
+- invalid credentials,
+- Conditional Access,
+- the SAML signing certificate,
+- NameID configuration,
+- Azure RBAC.
+
+## Remediation
+
+The application control was not weakened.
+
+The following settings remained unchanged:
+
+- `Assignment required = Yes`
+- group-based application assignment
+- SAML configuration
+
+Mia was temporarily added to:
+
+`GRP-APP-RESEARCH-PORTAL-USERS`
+
+After membership propagation, Entra recorded successful application sign-in.
+
+## Observed Service Provider Mapping Issue
+
+The first post-remediation Service Provider attempt still returned a generic Toolkit application error even though Entra showed **Success**.
+
+The SAML Toolkit sample application requires a local Toolkit test user whose email matches the Entra NameID.
+
+Lisa already had a matching Toolkit account; Mia did not.
+
+After the matching Mia Toolkit test account was created, the SAML flow completed successfully.
+
+This demonstrated an important distinction:
+
+```text
+Identity Provider success
+≠
+Service Provider application success
+```
+
+The local-user dependency is specific to the sample Toolkit and is not presented as an Entra federation defect.
+
+## Validation
+
+The final retest succeeded:
+
+```text
+Mia
+↓
+Entra authentication
+↓
+Conditional Access success
+↓
+effective group-based app assignment
+↓
+SAML assertion
+↓
+matching Toolkit user
+↓
+application session success
+```
+
+Evidence:
+
+- `images/06-enterprise-app-sso/09-mia-successful-retest.png`
+
+Result:
+
+**PASS**
+
+## Rollback / Recovery
+
+Mia's group membership was required only for the controlled remediation/retest.
+
+After validation, Mia was removed from:
+
+`GRP-APP-RESEARCH-PORTAL-USERS`
+
+The final least-privilege application-access state therefore returned to the original authorized user scope.
+
+Rollback model:
+
+```text
+Unexpected application access
+↓
+Check authentication / Conditional Access
+↓
+Check enterprise-app assignment requirement
+↓
+Check direct group membership
+↓
+Correct justified membership
+↓
+Retest
+↓
+Remove temporary test access
+↓
+Restore least privilege
+```
+
+## Lesson Learned
+
+Authentication success does not imply application authorization.
+
+For federated enterprise applications, troubleshoot the chain in order:
+
+```text
+Identity
+→ Authentication
+→ Conditional Access
+→ Application assignment
+→ SAML federation
+→ Service Provider application state
+```
+
+The correct fix for an assignment failure was to align membership with the business requirement, not to disable assignment enforcement.

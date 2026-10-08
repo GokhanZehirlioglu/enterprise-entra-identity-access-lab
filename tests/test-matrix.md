@@ -13,8 +13,8 @@
 | T09 | Emergency administrator-assisted recovery | Emergency identity can authenticate with an administrator-issued temporary credential | Emergency Admin 01 successfully signed in with TAP | PASS |
 | T10 | Independent break-glass validation | Emergency access remains available without dependency on normal admin authentication | Phase 3 validated CA exclusion, but an independent emergency credential / failure-domain test is still not implemented | DEFERRED |
 | T11 | Expired TAP sign-in rejection | An expired TAP is rejected during a fresh sign-in attempt | Separate rejected sign-in attempt not captured; expiry state only was validated | NOT RUN |
-| T12 | User outside application group | Access denied | TBD | NOT RUN |
-| T13 | Finance user in approved group | Access allowed | TBD | NOT RUN |
+| T12 | User outside application group | Access denied | Mia Schneider was not assigned and was not a direct member of the assigned app-access group; SSO was blocked with `AADSTS50105` | PASS |
+| T13 | Finance user in approved group | Access allowed | Lisa Werner, a direct member of `GRP-APP-RESEARCH-PORTAL-USERS`, completed SAML SSO successfully and the enterprise-app sign-in log recorded `Success` | PASS |
 | T14 | Standard user without Phase 4 Azure RBAC assignment accesses the lab resource | Resource access unavailable / denied | Lisa Werner had no Phase 4 RBAC group assignment and could not access the Storage resource | PASS |
 | T15 | PIM eligible Contributor-group membership activation | Eligibility becomes temporary active membership only after the controlled activation workflow | Emilia's eligible membership was approved and activated for one hour | PASS |
 | T16 | Incorrect CA group scope | Failure visible in sign-in evidence | TBD | NOT RUN |
@@ -22,7 +22,7 @@
 | T18 | Guest attempts unassigned app | Denied | TBD | NOT RUN |
 | T19 | Azure Reader attempts write | Denied | Mia Schneider could inspect the Storage Account but tag assignment failed | PASS |
 | T20 | Azure Contributor performs permitted change | Allowed | Emilia Haas successfully assigned a Storage Account tag after Contributor membership was applied | PASS |
-| T21 | Enterprise App / SSO misconfiguration | Failure captured and RCA completed | TBD | NOT RUN |
+| T21 | Enterprise App / SSO assignment failure | Unassigned access is blocked; RCA identifies the assignment gap; justified group-membership remediation succeeds without disabling assignment enforcement | Mia received `AADSTS50105`; Sign-in Logs showed error `50105` with Conditional Access `Success`; temporary group membership restored access and the SSO retest succeeded | PASS |
 | T22 | Graph script lacks permission | Predictable failure and permission RCA | TBD | NOT RUN |
 | T23 | Mover changes department | Old access removed, new access applied | TBD | NOT RUN |
 | T24 | Leaver offboarding | Membership/access/session controls removed | TBD | NOT RUN |
@@ -46,6 +46,10 @@
 | T42 | Post-deactivation access | Contributor capability disappears after PIM deactivation | Storage resource became unavailable again after deactivation | PASS |
 | T43 | PIM audit trail | Request / approval / activation events are observable in PIM audit history | User-specific PIM audit history showed assignment, request, approval and completed activation events | PASS |
 | T44 | PIM Access Review execution | Periodic privileged eligibility recertification is executed | Governance review model documented; dedicated Access Review not executed in this phase | DOCUMENTED |
+| T45 | SP-initiated SAML SSO | Assigned user completes end-to-end SAML SSO | Lisa Werner authenticated through Entra and reached the SAML Toolkit; Entra sign-in evidence recorded Success | PASS |
+| T46 | My Apps / IdP-initiated launch | Assigned application is visible and launches successfully from My Apps | WEZ Research Collaboration Portal was visible for Lisa and launched the Toolkit successfully | PASS |
+| T47 | Business identity claims configuration | Application has explicit department and jobTitle SAML mappings | `department → user.department` and `jobTitle → user.jobtitle` were configured; raw assertion decoding was not independently performed | CONFIGURED |
+| T48 | Temporary app-access remediation rollback | Temporary test access is removed after successful retest | Mia was removed from `GRP-APP-RESEARCH-PORTAL-USERS` after the successful remediation/retest, restoring the final least-privilege state | PASS |
 
 ## Notes
 
@@ -55,6 +59,9 @@
 - Phase 5 validated PIM for Groups JIT membership over the existing Contributor RBAC model: eligible-only denial → MFA/justification/approval → temporary active membership → management-plane write → deactivation → access loss.
 - Phase 5 captured user-specific PIM audit history. A populated resource-wide PIM audit view was not claimed.
 - Phase 5 documents the privileged-membership recertification concept but does not claim an executed PIM Access Review.
+- Phase 6 validated group-based enterprise-app authorization, SAML SSO, AADSTS50105 assignment enforcement, sign-in-log RCA, group-membership remediation, successful retest, My Apps launch and final least-privilege rollback.
+- The Phase 6 `department` and `jobTitle` mappings are documented as configured claims; raw SAML assertion decoding was not independently performed.
+- A Toolkit-specific local-user matching dependency was observed after Entra recorded a successful sign-in; it is documented as a Service Provider-side application dependency rather than an Entra federation failure.
 - `MFA capable` means the identity has an MFA-capable registered method. It does not by itself mean MFA is required on every sign-in.
 - Emergency Admin 01 TAP testing proves administrator-assisted recovery/bootstrap, not fully independent break-glass authentication.
 - A physical FIDO2 security key was not available in the lab; no hardware-key validation is claimed.
